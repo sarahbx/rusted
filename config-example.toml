@@ -1,0 +1,22 @@
+[local]
+public_ssh_key = "{HOME}/.ssh/.id_rsa.pub"
+
+[auth.executor]
+host = "192.168.0.10"
+user = "user"
+ssh_key = "{HOME}/.ssh/executor.key.pub"
+
+[auth.my_lab]
+host = "192.168.0.11"
+user = "root"
+ssh_key = "{HOME}/.ssh/my_lab.pub"
+
+
+[hosts.my_clusters]
+auth = "executor"
+regex = "^(c01)-[-a-z0-9]*41[23456][-a-z0-9]*$"
+cluster_directory = "/mnt/my_clusters"
+
+[hosts.my_lab]
+auth = "my_lab"
+regex = "^my-lab$"

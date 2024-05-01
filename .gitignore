@@ -3,3 +3,4 @@ target
 .idea
 *.pyc
 __pycache__
+config.toml
