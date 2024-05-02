@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::path::Path;
-use pyo3::impl_::wrap::OkWrap;
 use regex::Regex;
 use serde::{Deserialize, Serialize};
 use serde_json::value::{Value};
@@ -76,18 +75,13 @@ impl Config {
         }
     }
 
-    pub fn get_username(&self, auth_config: &Box<HashMap<String, Value>>) -> Box<String> {
-        Box::new(auth_config.get("user").unwrap().to_string())
+    pub fn get_auth(&self, auth_config: &Box<HashMap<String, Value>>, key: &str) -> Box<String> {
+        Box::new(auth_config.get(key).unwrap().to_string())
     }
 
     pub fn get_ssh_key(&self, auth_config: &Box<HashMap<String, Value>>) -> Box<String> {
         let ssh_key = Box::new(auth_config.get("ssh_key").unwrap().to_string());
         self.populate_local_home(ssh_key)
-    }
-
-    pub fn get_public_ssh_key(&self) -> Box<String> {
-        let public_ssh_key = Self::get_string_from_hashmap(self.local.as_ref().unwrap(), "public_ssh_key");
-        self.populate_local_home(public_ssh_key)
     }
 
     pub fn get_remote_cluster_directory(&self, host_config: &Box<HashMap<String, Value>>) -> Box<String> {

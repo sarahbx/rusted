@@ -1,4 +1,4 @@
-use pyo3::prelude::{pymodule, pyclass, pymethods, pyfunction, wrap_pyfunction, PyModuleMethods};
+use pyo3::prelude::{pymodule, pyclass, pymethods, pyfunction, wrap_pyfunction};
 use pyo3::{Bound, PyResult, Python};
 use pyo3::types::PyModule;
 

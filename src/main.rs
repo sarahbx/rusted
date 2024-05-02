@@ -1,5 +1,5 @@
 use std::error::Error;
-use std::{panic, process, thread};
+use std::{panic, process};
 use clap;
 
 #[path = "lib.rs"]
@@ -56,7 +56,7 @@ impl Cli {
                 let auth_config = config.get_auth_config(&host_config);
                 let ssh_host = SshHost {
                     host: config.get_hostname(&host_config, &auth_config, &cluster_name),
-                    user: Box::new(auth_config.get("user").unwrap().to_string()),
+                    user: config.get_auth(&auth_config, "user"),
                     key: config.get_ssh_key(&auth_config)
                 };
                 match subcommand {

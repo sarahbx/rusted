@@ -1,5 +1,7 @@
 # rusted
 
+Tool/framework for learning Rust/Python development
+
 ### Development
 
     $ sudo dnf install rustc cargo rustup rust-src
