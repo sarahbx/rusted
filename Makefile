@@ -1,6 +1,6 @@
 
 build:
-	cargo build
+	cargo test
 	maturin build
 
 

@@ -15,7 +15,7 @@ pub struct Config {
 
 impl Config {
     pub fn new(yaml_file_path: &str) -> Box<Self> {
-        assert!(Path::new(yaml_file_path).exists());
+        assert!(Path::new(yaml_file_path).exists(), "Config file not found");
 
         Box::new(config::Config::builder()
             .add_source(config::File::new(yaml_file_path, config::FileFormat::Toml).required(true))
