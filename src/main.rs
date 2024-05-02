@@ -69,6 +69,7 @@ impl Cli {
                         let destination_path = format!("~/.kube/{}/", cluster_name);
                         bash(format!("mkdir -p ~/.kube/{}", cluster_name).as_str(), true);
                         ssh_host.scp_from_host(source_path.as_str(), destination_path.as_str());
+                        println!("Run:\nexport KUBECONFIG=~/.kube/{}/kubeconfig\n\n", cluster_name)
                     }
                     _ => {}
                 }

@@ -4,3 +4,5 @@ pub mod bash;
 pub mod config;
 #[path = "lib/ssh.rs"]
 pub mod ssh;
+#[path = "lib/python.rs"]
+pub mod python;

@@ -1,0 +1,16 @@
+[tool.maturin]
+name = "rusted"
+version = "0.1.0"
+description = ""
+authors = ["Sarah Bennert <sbennert@redhat.com>"]
+readme = "README.md"
+python-source = "python"
+module-name = "rusted"
+
+[tool.maturin.dependencies]
+python = "^3.12"
+
+
+[build-system]
+requires = ["maturin>=1.0,<2.0"]
+build-backend = "maturin"
