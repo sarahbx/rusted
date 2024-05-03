@@ -2,23 +2,28 @@
 
 Tool/framework for learning Rust/Python development
 
-### Development
+Rust CLI based on `sarahbx/help-cli`  
+Python integration based on `pyo3`
 
-    $ sudo dnf install rustc cargo rustup rust-src
+### Development
+    $ sudo dnf install make rustc cargo rustup rust-src llvm
     $ python3 -m pip install --user pipx
     $ python3 -m pipx ensurepath
-    $ pipx install maturin
+    $ pipx install maturin    # for python support
+    $ cargo install rustfilt  # for rust coverage
 
-### Build
+### Config
+    $ cp config-example.toml ~/.rusted-config.toml
+    # Edit local config ~/.rusted-config.toml
 
+### Build/Test
+    $ make clean
     $ make build
 
 ### Run
-
     $ ./target/debug/rusted --help
 
 ### Try running Rust from Python or Python from Rust
-
     $ maturin develop
     ...
     $ python3
@@ -33,3 +38,6 @@ Tool/framework for learning Rust/Python development
     >>> from rusted.rusted import run_python_from_rust
     >>> run_python_from_rust()
     PYTHON: Hello world
+
+### Build with test coverage
+    $ make coverage
