@@ -2,7 +2,7 @@
 
 Tool/framework for learning Rust/Python development
 
-Rust CLI based on `sarahbx/help-cli`  
+Rust CLI based on [https://github.com/sarahbx/hey-clipy](https://github.com/sarahbx/hey-clipy)  
 Python integration based on `pyo3`
 
 ### Development
