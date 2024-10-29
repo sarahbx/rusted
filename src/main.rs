@@ -8,6 +8,7 @@ use once_cell::sync::{Lazy};
 
 #[path = "lib.rs"]
 mod lib;
+use lib::ai::{Ollama};
 use lib::bash::{bash};
 use lib::config::{Config};
 use lib::ssh::{SshHost};
@@ -29,7 +30,12 @@ impl Cli {
     }
 
     fn get_arg_from_command(matches: &clap::ArgMatches, name: &str, id: &str) -> String {
-        matches.subcommand_matches(name).unwrap().get_one::<String>(id).unwrap().to_string()
+        let value = matches.subcommand_matches(name).unwrap().get_one::<String>(id);
+        if value.is_some() {
+            value.unwrap().to_string()
+        } else {
+            "".to_string()
+        }
     }
 
     pub fn run_cli(&mut self) -> Result<(), Box<dyn Error>> {
@@ -47,7 +53,23 @@ impl Cli {
             .subcommand(Self::new_command("fix"))
             .subcommand(Self::new_command("amend"))
             .subcommand(Self::new_command("ssh-bash").arg(Self::new_arg("cluster_name")))
-            .subcommand(Self::new_command("get-config").arg(Self::new_arg("cluster_name")));
+            .subcommand(Self::new_command("get-config").arg(Self::new_arg("cluster_name")))
+            .subcommand(Self::new_command("ai")
+                .arg(
+                    clap::Arg::new("model")
+                        .index(1)
+                        .required(false)
+                        .action(clap::ArgAction::Set)
+                )
+                .arg(
+                    clap::Arg::new("command")
+                        .index(2)
+                        .num_args(1..)
+                        .trailing_var_arg(true)
+                        .required(false)
+                        .action(clap::ArgAction::Set)
+                )
+            );
 
         let matches = cli.get_matches().clone();
         let subcommand = matches.subcommand_name();
@@ -86,6 +108,34 @@ impl Cli {
                     }
                     _ => {}
                 }
+            }
+            Some("ai") => {
+                let model = Self::get_arg_from_command(&matches, subcommand.unwrap(), "model");
+                let model_command = Self::get_arg_from_command(&matches, subcommand.unwrap(), "command");
+                let local_config = config.local.unwrap();
+                let config_interface = Config::get_string_from_hashmap(&local_config, "ai_interface");
+                let config_model = Config::get_string_from_hashmap(&local_config, "ai_model");
+
+                match Some(config_interface.as_str()) {
+                    Some("ollama") => {
+                        let ai_interface = Ollama::new();
+                        match Some(model.as_str()) {
+                            Some("") => {
+                                ai_interface.run(format!("run {}", config_model).as_str())
+                            }
+                            Some("list") => {
+                                ai_interface.run("list")
+                            }
+                            _ => {
+                                ai_interface.run(format!("{} {}", model, model_command).as_str())
+                            }
+                        }
+                    }
+                    _ => {
+                        panic!("Interface not implemented")
+                    }
+                }
+
             }
             _ => {}
         }

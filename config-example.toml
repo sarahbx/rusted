@@ -1,5 +1,7 @@
 [local]
 public_ssh_key = "{HOME}/.ssh/.id_rsa.pub"
+ai_interface = "ollama"
+model = "mistral"
 
 [auth.executor]
 host = "192.168.0.10"

@@ -6,3 +6,9 @@ pub mod config;
 pub mod ssh;
 #[path = "lib/python.rs"]
 pub mod python;
+#[path = "lib/rand.rs"]
+pub mod rand;
+#[path = "lib/venv.rs"]
+pub mod venv;
+#[path = "lib/ai.rs"]
+pub mod ai;

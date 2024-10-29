@@ -8,3 +8,5 @@ config.toml
 coverage
 *.profraw
 *.profdata
+.venv
+venv
